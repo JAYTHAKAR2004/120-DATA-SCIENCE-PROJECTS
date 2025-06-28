@@ -1,0 +1,5 @@
+opencv-python-headless==4.9.0.80
+numpy==1.26.4
+Flask==3.0.3
+Pillow==10.3.0
+gunicorn==21.2.0

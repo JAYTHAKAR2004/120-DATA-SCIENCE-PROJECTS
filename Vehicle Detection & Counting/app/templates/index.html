@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vehicle Detection-Count-Classification App</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Ubuntu', sans-serif;
+      background: linear-gradient(135deg, #1cb5e0, #000851);
+      min-height: 100vh;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    .navbar {
+      background-color: rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      padding: 40px;
+      margin-top: 50px;
+    }
+
+    h1, h5 {
+      text-shadow: 2px 2px 8px #000;
+    }
+
+    .btn-custom {
+      background-color: #32a84a;
+      border: none;
+      font-weight: bold;
+    }
+
+    .btn-custom:hover {
+      background-color: #28a745;
+    }
+
+    .preview-image {
+      max-height: 300px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+      margin-top: 30px;
+    }
+
+    footer {
+      margin-top: 40px;
+      color: #ccc;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-dark navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand mx-auto text-center" href="#">
+        <h1 class="h3 mb-0">🚗 Vehicle Detection & Classification</h1>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Upload Section -->
+  <div class="container">
+    <div class="row justify-content-center align-items-start">
+      <div class="col-md-6">
+        <div class="glass-card text-white">
+          <h4 class="mb-4 text-center">Upload an Image</h4>
+          <form action="/" method="post" enctype="multipart/form-data">
+            <div class="mb-4">
+              <input class="form-control form-control-lg" type="file" name="image_upload" id="image_upload" required />
+            </div>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-custom btn-lg">🚀 Process Image</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Result Section -->
+      <div class="col-md-6 text-center">
+        {% if full_filename %}
+          <img src="{{ url_for('static', filename=full_filename) }}" class="img-fluid preview-image" alt="Detected Vehicles" />
+        {% endif %}
+        {% if pred %}
+          <div class="mt-4">
+            <h5 class="bg-dark bg-opacity-50 p-3 rounded shadow">{{ pred }}</h5>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="mt-5">
+    Made with ❤️ by <span class="text-success fw-bold">JAY</span>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
