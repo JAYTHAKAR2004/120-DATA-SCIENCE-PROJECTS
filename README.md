@@ -187,4 +187,4 @@ If you're learning Data Science or want inspiration for your own project-based j
 > **⭐ Star this repo to help others discover these projects!**
 
 ---
-
+---
