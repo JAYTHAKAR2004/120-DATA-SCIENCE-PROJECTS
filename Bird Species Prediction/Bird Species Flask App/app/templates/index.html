@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bird Species Prediction App</title>
+  <!-- Materialize CSS -->
+  <link href="./static/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <style>
+    body {
+      background: linear-gradient(to right, #f3e5f5, #e1bee7);
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    nav {
+      height: 80px;
+      line-height: 80px;
+    }
+
+    nav .brand-logo {
+      font-size: 26px;
+      font-weight: bold;
+    }
+
+    .upload-card {
+      margin-top: 50px;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      background-color: #fff;
+    }
+
+    .btn-purple {
+      background-color: #9d03fc;
+    }
+
+    .btn-purple:hover {
+      background-color: #7c02c8;
+    }
+
+    .output-img {
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    h5.prediction {
+      margin-top: 20px;
+      font-weight: bold;
+      color: #6a1b9a;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="btn-purple">
+    <div class="nav-wrapper container">
+      <a class="brand-logo center">Bird Species Prediction App</a>
+      <div class="right hide-on-med-and-down" style="margin-right: 20px">
+        <span style="color: white;">Made by <strong>Jay</strong></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Section -->
+  <div class="container">
+    <div class="row">
+      <div class="col s12 m10 offset-m1 upload-card">
+        <form action="/" method="POST" enctype="multipart/form-data">
+          <div class="row">
+
+            <!-- Upload Column -->
+            <div class="col s12 m6">
+              <label><b>Upload Bird Image</b></label>
+              <div class="file-field input-field">
+                <div class="btn btn-purple">
+                  <span>Browse</span>
+                  <input type="file" name="image_upload" id="image_upload" required />
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text" placeholder="Upload image" id="image_name" />
+                </div>
+              </div>
+
+              <div class="center" style="margin-top: 30px;">
+                <button type="submit" class="btn-large btn-purple">Predict</button>
+              </div>
+
+              {% if pred %}
+              <h5 class="prediction">{{ pred }}</h5>
+              {% endif %}
+            </div>
+
+            <!-- Image Preview Column -->
+            <div class="col s12 m6 center-align" style="margin-top: 20px;">
+              {% if full_filename %}
+                <img class="responsive-img output-img" src="{{ url_for('static', filename=full_filename) }}" width="100%" height="auto" alt="Uploaded Bird Image">
+              {% else %}
+                <p style="margin-top: 100px; color: gray;">No image uploaded yet</p>
+              {% endif %}
+            </div>
+
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="./static/js/materialize.js"></script>
+  <script>
+    document.getElementById('image_upload').onchange = function () {
+      document.getElementById('image_name').value = this.value.split('\\').pop();
+    };
+  </script>
+
+</body>
+</html>
