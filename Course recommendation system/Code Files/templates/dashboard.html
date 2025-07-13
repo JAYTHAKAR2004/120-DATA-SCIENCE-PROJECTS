@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Course Recommendation | Dashboard</title>
+
+  <!-- Bootstrap 4 CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datasource@0.1.0"></script>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">Udemy Course Recommendation System</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/dashboard">Dashboard</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Dashboard Charts -->
+  <div class="row p-3">
+
+    <!-- Chart Cards -->
+    <div class="col-md-4 col-sm-6 mb-4">
+      <div class="card-body">
+        <h5 class="text-center font-weight-bold">Number of Subscribers Domain Wise</h5>
+        <canvas id="chart" width="400" height="400"></canvas>
+      </div>
+    </div>
+
+    <div class="col-md-4 col-sm-6 mb-4">
+      <div class="card-body">
+        <h5 class="text-center font-weight-bold">Number of Courses Level Wise</h5>
+        <canvas id="chart2" width="400" height="400"></canvas>
+      </div>
+    </div>
+
+    <div class="col-md-4 col-sm-6 mb-4">
+      <div class="card-body">
+        <h5 class="text-center font-weight-bold">Number of Subscribers Year Wise</h5>
+        <canvas id="chart3" width="400" height="400"></canvas>
+      </div>
+    </div>
+
+    <div class="col-md-4 col-sm-6 mb-4">
+      <div class="card-body">
+        <h5 class="text-center font-weight-bold">Profit Gained Year Wise</h5>
+        <canvas id="chart4" width="400" height="400"></canvas>
+      </div>
+    </div>
+
+    <div class="col-md-4 col-sm-6 mb-4">
+      <div class="card-body">
+        <h5 class="text-center font-weight-bold">Profit Earned Month Wise</h5>
+        <canvas id="chart5" width="400" height="400"></canvas>
+      </div>
+    </div>
+
+    <div class="col-md-4 col-sm-6 mb-4">
+      <div class="card-body">
+        <h5 class="text-center font-weight-bold">Subscribers Count Month Wise</h5>
+        <canvas id="chart6" width="400" height="400"></canvas>
+      </div>
+    </div>
+
+    <div class="col-md-12 mb-4">
+      <div class="card-body">
+        <h5 class="text-center font-weight-bold">Number of Subscribers enrolled per subject category</h5>
+        <canvas id="chart7" height="150"></canvas>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Charts JavaScript -->
+  {% block javascript %}
+  <script>
+    var valuecounts = {{ valuecounts | tojson }};
+    var levelcounts = {{ levelcounts | tojson }};
+    var subjectsperlevel = {{ subjectsperlevel | tojson }};
+    var subscriberscountmap = {{ subscriberscountmap | tojson }};
+    var yearwiseprofitmap = {{ yearwiseprofitmap | tojson }};
+    var profitmonthwisemap = {{ profitmonthwise | tojson }};
+    var monthwisesubmap = {{ monthwisesub | tojson }};
+
+    var domainname = Object.keys(valuecounts);
+    var countdomain = Object.values(valuecounts);
+
+    var levelname = Object.keys(levelcounts);
+    var levelcount = Object.values(levelcounts);
+
+    var levelname2 = Object.keys(subjectsperlevel);
+    var levelcount2 = Object.values(subjectsperlevel);
+
+    var years = Object.keys(yearwiseprofitmap);
+    var profitcount = Object.values(yearwiseprofitmap);
+
+    var subscriberscount = Object.values(subscriberscountmap);
+
+    var months = Object.keys(profitmonthwisemap);
+    var profitmonthwise = Object.values(profitmonthwisemap);
+    var subscriberscountmonth = Object.values(monthwisesubmap);
+
+    const chartColors = [
+      'rgba(255, 99, 132, 0.6)', 'rgba(54, 162, 235, 0.6)', 'rgba(255, 206, 86, 0.6)',
+      'rgba(75, 192, 192, 0.6)', 'rgba(153, 102, 255, 0.6)', 'rgba(255, 159, 64, 0.6)',
+      'rgba(250, 157, 60, 0.6)', 'rgba(100, 100, 100, 0.6)'
+    ];
+
+    function createChart(id, type, labels, data, label) {
+      new Chart(document.getElementById(id).getContext('2d'), {
+        type: type,
+        data: {
+          labels: labels,
+          datasets: [{
+            label: label,
+            data: data,
+            backgroundColor: chartColors,
+            borderColor: chartColors.map(c => c.replace('0.6', '1')),
+            borderWidth: 2
+          }]
+        }
+      });
+    }
+
+    // Create All Charts
+    createChart('chart', 'doughnut', domainname, countdomain, "Subscribers per Domain");
+    createChart('chart2', 'doughnut', levelname, levelcount, "Courses per Level");
+    createChart('chart3', 'bar', years, subscriberscount, "Subscribers per Year");
+    createChart('chart4', 'bar', years, profitcount, "Profit per Year");
+    createChart('chart5', 'bar', months, profitmonthwise, "Profit per Month");
+    createChart('chart6', 'bar', months, subscriberscountmonth, "Subscribers per Month");
+    createChart('chart7', 'line', levelname2, levelcount2, "Subscribers per Subject Category");
+  </script>
+  {% endblock %}
+
+  <!-- Bootstrap 4 JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,21 @@
+# Web Framework & Utilities
+Flask==3.0.3
+gunicorn==21.2.0
+itsdangerous==2.2.0
+Jinja2==3.1.3
+MarkupSafe==2.1.5
+Werkzeug==3.0.3
+
+# Data Science & Machine Learning Libraries
+numpy==1.26.4
+scipy==1.13.1
+scikit-learn==1.5.0
+matplotlib==3.9.0
+pandas==2.2.2
+seaborn==0.13.2
+
+# JSON Handling
+jsonschema==4.22.0
+
+# Text Preprocessing
+neattext==0.1.4
