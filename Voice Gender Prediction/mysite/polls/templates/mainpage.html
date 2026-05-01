@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Voice Reveal</title>
+</head>
+<body>
+<form method="post" action="{% url 'voice_reveal' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="inputGroup-sizing-default"><h2>Name</h2></span><br>
+        <input name="Person Name" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+    </div>
+    <br>
+    <div class="input-group mb-3">
+        <span class="input-group-text">standard deviation of the frequency of the voice audio (0.01 - 1)</span><br>
+        <input name="sd" type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
+    </div>
+    <br>
+    <div class="input-group mb-3">
+        <span class="input-group-text">median frequency of the voice audio (in kHz) (0.01 - 0.3)</span><br>
+        <input name="median" type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
+    </div>
+    <br>
+    <div class="input-group mb-3">
+        <span class="input-group-text">first quantile of all the frequency over the voice audio (in kHz)
+            (0.002 - 0.35)</span><br>
+        <input name="Q25" type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
+    </div>
+    <br>
+    <div class="input-group mb-3">
+        <span class="input-group-text">third quantile of all the frequency over the voice audio (in kHz)
+        (0.04 - 0.34)</span><br>
+        <input name="Q75" type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
+    </div>
+    <br>
+    <div class="input-group mb-3">
+        <span class="input-group-text">interquantile range (in kHz) (0.01 - 0.27)</span><br>
+        <input name="IQR" type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
+    </div>
+    <br>
+    <div class="input-group mb-3">
+        <span class="input-group-text">Skewness refers to a distortion or asymmetry that deviates from the
+            symmetrical bell curve, or normal distribution (-0.5<=skewness<=0.5 shows moderately skewness)
+        (0.09 - 50.23)</span><br>
+        <input name="skew" type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
+    </div>
+    <br>
+    <div class="input-group mb-3">
+        <span class="input-group-text">spectral entropy of the voice audio (0.6 - 1.00)</span><br>
+        <input name="spent" type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
+    </div>
+    <br>
+    <div class="input-group mb-3">
+        <span class="input-group-text">mode frequency over the voice audio (in kHz) (0 - 0.35)</span><br>
+        <input name="mode" type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
+    </div>
+    <br>
+    <div class="input-group mb-3">
+        <span class="input-group-text">frequency centroid (see specprop function for more info) (0.03 - 0.28)
+        </span><br>
+        <input name="centroid" type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
+    </div>
+    <br>
+    <div class="input-group mb-3">
+        <span class="input-group-text">mean fundamental frequency measured across acoustic signal (0.05 - 0.297)
+        </span><br>
+        <input name="meanfun" type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
+    </div>
+    <br>
+    <div class="input-group mb-3">
+        <span class="input-group-text">minimum fundamental frequency measured across acoustic signal (0.009 - 0.3)
+        </span><br>
+        <input name="minfun" type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
+    </div>
+    <br>
+    <div class="input-group mb-3">
+        <span class="input-group-text">maximum fundamental frequency measured across acoustic signal (0.1 - 0.3)
+        </span><br>
+        <input name="maxfun" type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
+    </div>
+    <br>
+    <div class="input-group mb-3">
+        <span class="input-group-text">minimum of dominant frequency measured across acoustic signal (0.004 - 0.5)
+        </span><br>
+        <input name="mindom" type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
+    </div>
+    <br><div class="input-group mb-3">
+        <span class="input-group-text">maximum of dominant frequency measured across acoustic signal (0.007 - 22.0)
+        </span><br>
+        <input name="maxdom" type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
+    </div>
+    <br><div class="input-group mb-3">
+        <span class="input-group-text">modulation index for the voice audio (0 - 0.96)</span><br>
+        <input name="modindx" type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
+    </div>
+    <br><hr>
+    <div class="col-auto">
+        <button type="submit" name="voice_button" value="Save&Next">Confirm Submission</button>
+    </div>
+    <hr>
+    {% if result %}
+        <h2>The Voice is of a {{ result }}!</h2>
+    {% endif %}
+</form>
+</body>
+</html>
